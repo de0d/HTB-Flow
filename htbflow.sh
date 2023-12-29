@@ -11,11 +11,7 @@ else
     rm vpn.txt
     exit
 fi
-echo "Welcome!"
-
-
-cat WelcomeBanner.txt
-echo "Welcome! Please enter the ip address you are trying to hack:"
+echo "Welcome! Please enter the ip address you would like enumerated:"
 read varname
 ip=$varname
 if expr "$ip" : '[0-9][0-9]*\.[0-9][0-9]*\.[0-9][0-9]*\.[0-9][0-9]*$' >/dev/null; then
@@ -32,18 +28,17 @@ else
 fi
 echo $varname
 echo "Working on it"
-nmap -sC -sV -Pn -oX - $varname > $varname.xml
-nmap -sC -sV -Pn $varname > $varname.txt
+nmap -sC -sV -Pn -p- $varname -oN $varname.txt -oX $varname.xml
 gobuster dir -u http://$varname/ -w /usr/share/wordlists/dirbuster/directory-list-2.3-small.txt -t 100 > gobust.txt
 
 clear
 
-echo "The following domains are open and available. 
-Now don't forget to soak up the 5G to begin  emitting your own WiFi to pentest next time"
+echo "The following domains are available."
 cat gobust.txt
+echo "if gobuster is giving you an error you may need to edit your /etc/hosts file"
 echo "
 
-The following ports are open and available. Now dont accidently wear your cum sock today"
+The following ports are available with the following services. Thank you for choosing LunchBox"
 cat $varname.txt | grep '[0-65535]/tcp' > nmap_filtered.txt
 cat nmap_filtered.txt
 
@@ -57,11 +52,10 @@ if expr $yesno : '[y]'; then
         searchsploit --nmap $varname.xml --path
 else
         echo "hope you enjoyed using the script please make any suggestions and tell
-		me any errors at https://github.com/LunchBox6996/firstscript"
+                me any errors at https://github.com/LunchBox6996/HTB-flow"
 fi
 
 rm $varname.xml
 rm gobust.txt
 rm $varname.txt
 rm nmap_filtered.txt
-

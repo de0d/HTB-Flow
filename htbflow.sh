@@ -52,7 +52,7 @@ if expr $yesno : '[y]'; then
         searchsploit --nmap $varname.xml --path
 else
         echo "hope you enjoyed using the script please make any suggestions and tell
-                me any errors at https://github.com/LunchBox6996/HTB-flow"
+                me any errors at https://github.com/de0d/HTB-flow"
 fi
 
 rm $varname.xml
